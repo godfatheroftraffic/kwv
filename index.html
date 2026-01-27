@@ -240,28 +240,32 @@
 
                   var imgUrl;
 
-                  // If full URL, use as-is
-                  if (/^https?:\/\//i.test(chosen)) {
-                  imgUrl = chosen;
-                  } else {
-                  // Normalize slashes
-                  chosen = chosen.replace(/^\/+/, "");
+                /* === BACKGROUND IMAGE SWAP (PUBLIC FOLDER FIX) === */
+                if (params.img) {
+                var imgVal = (params.img || "").trim();
 
-                  // If they passed "public/xxx.jpg", keep it
-                  if (chosen.startsWith("public/")) {
-                  imgUrl = "/" + chosen;
-                  } else {
-                  // Otherwise FORCE /public/
-                  imgUrl = "/public/" + chosen;
-                  }
-                  }
+                // If full URL, use it. Otherwise FORCE /public/ (because Teleport stores images there)
+                var imgUrl = imgVal.startsWith("http")
+                ? imgVal
+                : (imgVal.startsWith("/public/") ? imgVal
+                : (imgVal.startsWith("public/") ? "/" + imgVal
+                : "/public/" + imgVal));
 
-                root.style.setProperty("background-image", 'url("' + imgUrl + '")', "important");
-                root.style.setProperty("background-size", "cover", "important");
-                root.style.setProperty("background-position", "center", "important");
-                root.style.setProperty("background-repeat", "no-repeat", "important");
+                // Keep your original target (echo-root) BUT ALSO set body in case the bg is on the Container wrapper.
+                var root = document.getElementById("echo-root");
+                if (root) {
+                root.style.backgroundImage = 'url("' + imgUrl + '")';
+                root.style.backgroundSize = "cover";
+                root.style.backgroundPosition = "center";
+                root.style.backgroundRepeat = "no-repeat";
+                }
 
-                  console.log("BG IMAGE SET TO:", imgUrl);
+                document.body.style.backgroundImage = 'url("' + imgUrl + '")';
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundPosition = "center";
+                document.body.style.backgroundRepeat = "no-repeat";
+
+                console.log("BG IMAGE SET TO:", imgUrl);
                   })();
               });
             </script>
