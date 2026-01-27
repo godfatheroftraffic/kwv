@@ -256,10 +256,10 @@
                   }
                   }
 
-                  root.style.backgroundImage = 'url("' + imgUrl + '")';
-                  root.style.backgroundSize = "cover";
-                  root.style.backgroundPosition = "center";
-                  root.style.backgroundRepeat = "no-repeat";
+                root.style.setProperty("background-image", 'url("' + imgUrl + '")', "important");
+                root.style.setProperty("background-size", "cover", "important");
+                root.style.setProperty("background-position", "center", "important");
+                root.style.setProperty("background-repeat", "no-repeat", "important");
 
                   console.log("BG IMAGE SET TO:", imgUrl);
                   })();
