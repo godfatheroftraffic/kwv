@@ -182,6 +182,11 @@
                 >
                   View Demo
                 </a>
+                <div
+                  id="bg"
+                  data-default="kwv_5.jpg"
+                  style="display:none"
+                ></div>
               </div>
             </div>
 
@@ -220,24 +225,50 @@
                   if (params.cta && document.getElementById("cta")) {
                     document.getElementById("cta").textContent = params.cta;
                   }
-                    /* === BACKGROUND IMAGE SWAP === */
-                    if (params.img) {
-                    var imgVal = params.img.trim();
-
-                    // If full URL, use it. If filename, assume it's in /public root
-                    var imgUrl = imgVal.startsWith("http")
-                    ? imgVal
-                    : "/" + imgVal.replace(/^\/+/, "");
-
+                    /* === BACKGROUND IMAGE SWAP (FIXED FOR /public/) === */
                     var root = document.getElementById("echo-root");
                     if (root) {
+                    // 1) default bg from HTML attribute (so template always has a fallback)
+                    var defaultBg = (root.getAttribute("data-bg-default") || "").trim();
+
+                    // 2) img param overrides default if present
+                    var imgVal = (params.img || "").trim();
+
+                    // choose which background to use
+                    var chosen = imgVal || defaultBg;
+
+                    if (chosen) {
+                    // If full URL, use it.
+                    // If filename, force it to load from /public/
+                    // If already "public/..." or "/public/..." keep it.
+                    var imgUrl;
+                    if (/^https?:\/\//i.test(chosen)) {
+                    imgUrl = chosen;
+                    } else {
+                    chosen = chosen.replace(/^\/+/, ""); // remove leading slashes
+                    if (chosen.startsWith("public/")) {
+                    imgUrl = "/" + chosen; // "/public/kwv_16.jpg"
+                    } else if (chosen.startsWith("public")) {
+                    imgUrl = "/" + chosen; // edge-case
+                    } else if (chosen.startsWith("public/")) {
+                    imgUrl = "/" + chosen;
+                    } else if (chosen.startsWith("public")) {
+                    imgUrl = "/" + chosen;
+                    } else if (chosen.startsWith("public/") || chosen.startsWith("/public/")) {
+                    imgUrl = chosen.startsWith("/") ? chosen : "/" + chosen;
+                    } else {
+                    imgUrl = "/public/" + chosen; // "kwv_16.jpg" -> "/public/kwv_16.jpg"
+                    }
+                    }
+
                     root.style.backgroundImage = 'url("' + imgUrl + '")';
                     root.style.backgroundSize = "cover";
                     root.style.backgroundPosition = "center";
                     root.style.backgroundRepeat = "no-repeat";
-                    }
 
                     console.log("BG IMAGE SET TO:", imgUrl);
+                    } else {
+                    console.log("BG IMAGE: no param.img and no default set");
                     }
                 })();
               });
