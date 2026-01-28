@@ -169,8 +169,18 @@
                 }
               }
 
-              #echo-content {
+              /* =========================================================
+                 FOOTER FIX - ensure footer stays visible and clickable
+                 ========================================================= */
+              #echo-footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 2000;
+                /* Above the echo overlay */
                 pointer-events: auto !important;
+                /* Footer links must be clickable */
               }
             </style>
 
