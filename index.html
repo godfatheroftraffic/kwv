@@ -82,13 +82,14 @@
                 --kw-accent-text: #0b0f14;
                 /* CTA text color */
                 --kw-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-                  "Helvetica Neue", Helvetica;
+                  "Helvetica Neue", Helvetica, sans-serif;
               }
 
               /* =========================================================
                  UNIVERSAL FULLSCREEN WRAPPER
                  - This is OUR wrapper, not Teleport's.
                  - Background image is applied here by JS.
+                 - Footer is included inside this wrapper.
                  ========================================================= */
               #echo-root {
                 position: fixed;
@@ -97,13 +98,14 @@
                 width: 100vw;
                 height: 100vh;
                 display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 22px;
+                flex-direction: column;
                 font-family: var(--kw-font);
                 color: var(--kw-text);
                 z-index: 1000;
-                pointer-events: none !important;
+                pointer-events: none;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
               }
 
               /* Dark overlay so text stays readable */
@@ -114,17 +116,25 @@
                 width: 100%;
                 height: 100%;
                 background: var(--kw-bg-overlay);
-                z-index: 0;
-                pointer-events: none !important;
+                z-index: 1;
+                pointer-events: none;
               }
 
+              /* Main content area (headline, subheadline, CTA) */
               #echo-content {
                 position: relative;
-                z-index: 1;
+                z-index: 2;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 22px;
                 width: 100%;
                 max-width: 720px;
+                margin: 0 auto;
                 text-align: center;
-                pointer-events: auto !important;
+                pointer-events: auto;
               }
 
               #hl {
@@ -152,6 +162,66 @@
                 border-radius: 12px;
                 font-weight: 900;
                 box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+                transition: transform 0.15s ease, box-shadow 0.15s ease;
+                cursor: pointer;
+              }
+
+              #cta:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45);
+              }
+
+              #cta:active {
+                transform: translateY(0px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+              }
+
+              /* =========================================================
+                 FOOTER (INSIDE ECHO ROOT)
+                 - Footer is part of the echo system now
+                 - Customize brand name, year, and links in HTML below
+                 ========================================================= */
+              #echo-footer {
+                position: relative;
+                z-index: 2;
+                width: 100%;
+                padding: 14px 20px;
+                background: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                pointer-events: auto;
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.8);
+              }
+
+              #footer-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                flex-wrap: wrap;
+              }
+
+              #footer-copyright {
+                margin: 0;
+              }
+
+              #footer-links {
+                display: flex;
+                gap: 16px;
+                flex-wrap: wrap;
+              }
+
+              #footer-links a {
+                color: rgba(255, 255, 255, 0.9);
+                text-decoration: none;
+                transition: color 0.2s;
+              }
+
+              #footer-links a:hover {
+                color: #ffffff;
               }
 
               @media (max-width: 420px) {
@@ -167,20 +237,17 @@
                   width: 100%;
                   max-width: 320px;
                 }
-              }
 
-              /* =========================================================
-                 FOOTER FIX - ensure footer stays visible and clickable
-                 ========================================================= */
-              #echo-footer {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                z-index: 2000;
-                /* Above the echo overlay */
-                pointer-events: auto !important;
-                /* Footer links must be clickable */
+                #footer-content {
+                  flex-direction: column;
+                  text-align: center;
+                  gap: 8px;
+                }
+
+                #echo-footer {
+                  font-size: 11px;
+                  padding: 12px 16px;
+                }
               }
             </style>
 
@@ -190,6 +257,10 @@
               <div id="echo-content">
                 <!-- =======================================================
          BRAND DEFAULT COPY (fallbacks if no URL params)
+         =======================================================
+         CUSTOMIZE THESE FOR EACH BRAND:
+         - data-default = fallback value if URL param missing
+         - Text between tags = what shows when testing directly
          ======================================================= -->
                 <h1 id="hl" data-default="Trade Without Being There">
                   Trade Without Being There
@@ -201,6 +272,7 @@
                 <a
                   id="cta"
                   data-default="View Demo"
+                  data-default-href="https://form.typeform.com/to/VV7QWTvH?utm_source=xxxxx&amp;utm_medium=xxxxx&amp;utm_campaign=xxxxx#first_name=xxxxx&amp;email=xxxxx&amp;phone_number=xxxxx"
                   href="https://form.typeform.com/to/VV7QWTvH?utm_source=xxxxx&amp;utm_medium=xxxxx&amp;utm_campaign=xxxxx#first_name=xxxxx&amp;email=xxxxx&amp;phone_number=xxxxx"
                 >
                   View Demo
@@ -208,8 +280,9 @@
 
                 <!-- =======================================================
          BRAND DEFAULT BACKGROUND (fallback if no ?img=)
+         =======================================================
          IMPORTANT: images live in /public/
-         So we use just the filename here.
+         Just use the filename here (e.g., kwv_5.jpg)
          ======================================================= -->
                 <div
                   id="bg"
@@ -217,6 +290,50 @@
                   style="display:none"
                 ></div>
               </div>
+
+              <!-- =======================================================
+       FOOTER SECTION
+       =======================================================
+       CUSTOMIZE FOR EACH BRAND:
+       1. Brand name in copyright
+       2. Year (or use "2026" and update annually)
+       3. Privacy Policy URL
+       4. Terms of Service URL
+       5. Cookie Policy URL (or remove if not needed)
+       ======================================================= -->
+              <footer id="echo-footer">
+                <div id="footer-content">
+                  <!-- COPYRIGHT TEXT - UPDATE BRAND NAME AND YEAR -->
+                  <p id="footer-copyright">
+                    © 2025 Brand Name. All rights reserved.
+                  </p>
+
+                  <!-- FOOTER LINKS - UPDATE URLs FOR EACH BRAND -->
+                  <div id="footer-links">
+                    <a
+                      href="https://yourbrand.com/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Privacy Policy
+                    </a>
+                    <a
+                      href="https://yourbrand.com/terms"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Terms of Service
+                    </a>
+                    <a
+                      href="https://yourbrand.com/cookies"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Cookie Policy
+                    </a>
+                  </div>
+                </div>
+              </footer>
             </div>
 
             <script>
@@ -229,6 +346,10 @@
                        ?sh=Subheadline
                        ?cta=Button%20Text
                        ?img=kwv_16.jpg   (expects image files in /public/)
+                       ?link=https://destination.com (button destination URL)
+                       ?clickid=abc123 (tracking - passed to button)
+                       ?utm_source=push (tracking - passed to button)
+                       ... any other tracking params
                      Also supports hash params:
                        #hl=...&img=...
                      ========================================================= */
@@ -260,6 +381,46 @@
                   if (params.hl && hlEl) hlEl.textContent = params.hl;
                   if (params.sh && shEl) shEl.textContent = params.sh;
                   if (params.cta && ctaEl) ctaEl.textContent = params.cta;
+
+                  /* =========================================================
+                     2.5) BUTTON LINK + TRACKING PARAMETER PASS-THROUGH
+                     =========================================================
+                     This allows:
+                     - ?link= parameter to change button destination
+                     - All tracking params (clickid, utm_*, etc) automatically
+                       passed through to button destination
+
+                     Example URL:
+                     /quiz?hl=Test&clickid=abc123&utm_source=push&link=https://calendly.com/demo
+
+                     Button will link to:
+                     https://calendly.com/demo?clickid=abc123&utm_source=push
+                     ========================================================= */
+                  if (ctaEl) {
+                    var baseUrl = params.link || ctaEl.getAttribute("data-default-href") || ctaEl.href;
+
+                    // Content params that should NOT be passed to button
+                    var contentParams = ["hl", "sh", "cta", "img", "link"];
+
+                    // Collect all tracking params (everything except content params)
+                    var trackingParams = [];
+                    for (var key in params) {
+                      if (params.hasOwnProperty(key) && contentParams.indexOf(key) === -1) {
+                        trackingParams.push(
+                          encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
+                        );
+                      }
+                    }
+
+                    // Append tracking params to button URL
+                    if (trackingParams.length > 0) {
+                      var separator = baseUrl.indexOf("?") === -1 ? "?" : "&";
+                      baseUrl = baseUrl + separator + trackingParams.join("&");
+                    }
+
+                    ctaEl.href = baseUrl;
+                    console.log("CTA LINK SET:", baseUrl);
+                  }
 
                   /* =========================================================
                      3) BACKGROUND SWAP (SUBDOMAIN-SAFE)
@@ -333,80 +494,6 @@
             </script>
           </div>
         </div>
-        <footer11-wrapper
-          class="footer11-wrapper"
-          rootclassname="footer11undefined"
-        >
-          <!--Footer11 component-->
-          <footer
-            class="footer11-container1 thq-section-padding footer11root-class-name1"
-          >
-            <div class="footer11-thq-max-width-elm thq-section-max-width">
-              <div></div>
-              <a
-                href="https://killerwhaleventures.com/"
-                target="_blank"
-                rel="noreferrer noopener"
-                class="footer11-link1"
-              >
-                <img
-                  alt="image"
-                  src="public/kwip_logo_solid-200h.png"
-                  class="footer11-image"
-                />
-              </a>
-              <div></div>
-              <span class="footer11-text1">
-                <fragment class="quiz-fragment1">
-                  <span class="quiz-text1">
-                    Copyright © 2026 Killer Whale Ventures All Rights Reserved.
-                  </span>
-                </fragment>
-              </span>
-              <div class="footer11-thq-credits-elm1">
-                <div class="footer11-thq-row-elm">
-                  <div class="footer11-thq-credits-elm2"></div>
-                </div>
-              </div>
-            </div>
-            <div class="footer11-container2">
-              <div class="footer11-container3">
-                <div class="footer11-container4">
-                  <a
-                    href="https://killerwhaleventures.com/web-user-agreement/"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    class="footer11-link2"
-                  >
-                    <fragment class="quiz-fragment2">
-                      <span class="quiz-text2">Terms |&nbsp;</span>
-                    </fragment>
-                  </a>
-                </div>
-                <a
-                  href="https://killerwhaleventures.com/privacy-policy/"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  class="footer11-link3"
-                >
-                  <fragment class="quiz-fragment3">
-                    <span class="quiz-text3">Privacy |&nbsp;</span>
-                  </fragment>
-                </a>
-              </div>
-              <a
-                href="https://killerwhaleventures.com/cookie-policy/"
-                target="_blank"
-                rel="noreferrer noopener"
-                class="footer11-link4"
-              >
-                <fragment class="quiz-fragment4">
-                  <span class="quiz-text4">Cookie Policy</span>
-                </fragment>
-              </a>
-            </div>
-          </footer>
-        </footer11-wrapper>
       </div>
       <link rel="canonical" href="https://quiz.teleporthq.app/" />
     </div>
