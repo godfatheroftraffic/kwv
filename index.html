@@ -87,35 +87,32 @@
 
               /* =========================================================
                  UNIVERSAL FULLSCREEN WRAPPER
-                 - This is OUR wrapper, not Teleport’s.
+                 - This is OUR wrapper, not Teleport's.
                  - Background image is applied here by JS.
                  ========================================================= */
-              /* FOOTER FIX: fullscreen hero without covering the entire page forever */
               #echo-root {
-                position: relative;
-                /* was fixed */
-                width: 100%;
-                min-height: 100vh;
-                /* still full screen */
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 padding: 22px;
                 font-family: var(--kw-font);
                 color: var(--kw-text);
-                z-index: 1;
-                /* was 9999 */
+                z-index: 1000;
                 pointer-events: none !important;
-                /* keeps underlying page clickable */
               }
 
               /* Dark overlay so text stays readable */
               #echo-overlay {
-                position: fixed;
-                top: o;
+                position: absolute;
+                top: 0;
                 left: 0;
-                width: 100vw;
-                height: 100vh;
+                width: 100%;
+                height: 100%;
                 background: var(--kw-bg-overlay);
                 z-index: 0;
                 pointer-events: none !important;
@@ -171,14 +168,6 @@
                   max-width: 320px;
                 }
               }
-
-              /* =========================================================
-                 CLICK FIX
-                 - If we need the site under the overlay to remain clickable,
-                   keep pointer-events disabled on root.
-                 - If we want this overlay to capture clicks everywhere,
-                   remove the #echo-root pointer-events line.
-                 ========================================================= */
 
               #echo-content {
                 pointer-events: auto !important;
@@ -323,7 +312,7 @@
                       tryLoad(i + 1);
                     };
 
-                    /* Cache-bust so you don’t fight CDN caching during tests */
+                    /* Cache-bust so you don't fight CDN caching during tests */
                     img.src = url + (url.indexOf("?") === -1 ? "?" : "&") + "v=" + Date.now();
                   }
 
