@@ -68,120 +68,127 @@
         <div data-bg-target="1" class="quiz-thq-container-elm"></div>
         <div class="quiz-container2">
           <div class="quiz-container3">
-            <style>
-                :root {
-                  /* =========================================================
-                     BRANDING DEFAULTS — CHANGE THESE ONCE PER BRAND
-                     ========================================================= */
-                  --kw-bg-overlay: rgba(0, 0, 0, 0.55);
-                  /* overlay darkness */
-                  --kw-text: #ffffff;
-                  /* main text color */
-                  --kw-accent: #00e676;
-                  /* CTA button bg */
-                  --kw-accent-text: #0b0f14;
-                  /* CTA text color */
-                  --kw-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-                    "Helvetica Neue", Helvetica;
-                }
+            <!-- =========================================================
+     ✅ DROP-IN EMBED CODE (WORKING + REPEATABLE)
+     - Dynamic: ?hl=  ?sh=  ?cta=  ?img=
+     - Background images expected in: /public/<filename>
+     - Overlay is FULL SCREEN (never “middle-only”)
+     - Footer stays clickable (overlay never blocks clicks)
+     ========================================================= -->
 
+            <style>
+              :root {
                 /* =========================================================
-                   UNIVERSAL FULLSCREEN WRAPPER
-                   - This is OUR wrapper, not Teleport’s.
-                   - Background image is applied here by JS.
+                   BRANDING DEFAULTS — CHANGE THESE ONCE PER BRAND
                    ========================================================= */
-                /* FOOTER FIX: fullscreen hero without covering the entire page forever */
-                #echo-root {
-                position: relative; /* was fixed */
+                --kw-bg-overlay: rgba(0, 0, 0, 0.45);
+                /* overlay darkness (0.30 lighter, 0.60 darker) */
+                --kw-text: #ffffff;
+                /* main text color */
+                --kw-accent: #00e676;
+                /* CTA button bg */
+                --kw-accent-text: #0b0f14;
+                /* CTA text color */
+                --kw-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+                  "Helvetica Neue", Helvetica;
+              }
+
+              /* =========================================================
+                 UNIVERSAL WRAPPER (NOT TELEPORT’S)
+                 - This is the element we paint the background onto.
+                 - It takes up 100vh so the hero is full screen.
+                 - pointer-events: none keeps the rest of the page (footer) clickable.
+                 ========================================================= */
+              #echo-root {
+                position: relative;
                 width: 100%;
-                min-height: 100vh; /* still full screen */
+                min-height: 100vh;
+
                 display: flex;
                 align-items: center;
                 justify-content: center;
+
                 padding: 22px;
                 font-family: var(--kw-font);
                 color: var(--kw-text);
-                z-index: 1; /* was 9999 */
-                pointer-events: none !important; /* keeps underlying page clickable */
-                }
 
-              /* Dark overlay so text stays readable */
-
-              #echo-overlay {
-              position: fixed;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              width: 100vw;
-              height: 100vh;
-              background: var(--kw-bg-overlay);
-              z-index: 0;
-              pointer-events: none !important;
+                z-index: 1;
+                pointer-events: none !important;
+                /* ✅ lets footer links remain clickable */
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
               }
 
-                #echo-content {
-                  position: relative;
-                  z-index: 1;
-                  width: 100%;
-                  max-width: 720px;
-                  text-align: center;
-                  pointer-events: auto !important;
-                }
+              /* =========================================================
+                 FULL-SCREEN OVERLAY (ALWAYS COVERS VIEWPORT)
+                 - FIXED so it never gets “stuck in the middle”
+                 - pointer-events none so it never blocks clicks
+                 ========================================================= */
+              #echo-overlay {
+                position: fixed;
+                inset: 0;
+                /* top:0 right:0 bottom:0 left:0 */
+                width: 100vw;
+                height: 100vh;
 
+                background: var(--kw-bg-overlay);
+                z-index: 0;
+                pointer-events: none !important;
+              }
+
+              /* Content sits above overlay */
+              #echo-content {
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                max-width: 720px;
+                text-align: center;
+                pointer-events: auto !important;
+                /* ✅ CTA stays clickable */
+              }
+
+              #hl {
+                margin: 0 0 14px;
+                font-size: 38px;
+                line-height: 1.08;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+              }
+
+              #sh {
+                margin: 0 0 22px;
+                font-size: 18px;
+                line-height: 1.45;
+                opacity: 0.95;
+              }
+
+              #cta {
+                display: inline-block;
+                padding: 16px 26px;
+                background: var(--kw-accent);
+                color: var(--kw-accent-text);
+                text-decoration: none;
+                font-size: 18px;
+                border-radius: 12px;
+                font-weight: 900;
+                box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+              }
+
+              @media (max-width: 420px) {
                 #hl {
-                  margin: 0 0 14px;
-                  font-size: 38px;
-                  line-height: 1.08;
-                  font-weight: 800;
-                  letter-spacing: -0.02em;
+                  font-size: 30px;
                 }
 
                 #sh {
-                  margin: 0 0 22px;
-                  font-size: 18px;
-                  line-height: 1.45;
-                  opacity: 0.95;
+                  font-size: 16px;
                 }
 
                 #cta {
-                  display: inline-block;
-                  padding: 16px 26px;
-                  background: var(--kw-accent);
-                  color: var(--kw-accent-text);
-                  text-decoration: none;
-                  font-size: 18px;
-                  border-radius: 12px;
-                  font-weight: 900;
-                  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+                  width: 100%;
+                  max-width: 320px;
                 }
-
-                @media (max-width: 420px) {
-                  #hl {
-                    font-size: 30px;
-                  }
-
-                  #sh {
-                    font-size: 16px;
-                  }
-
-                  #cta {
-                    width: 100%;
-                    max-width: 320px;
-                  }
-                }
-
-                /* =========================================================
-                   CLICK FIX
-                   - If we need the site under the overlay to remain clickable,
-                     keep pointer-events disabled on root.
-                   - If we want this overlay to capture clicks everywhere,
-                     remove the #echo-root pointer-events line.
-                   ========================================================= */
-
-                #echo-content {
-                  pointer-events: auto !important;
-                }
+              }
             </style>
 
             <div id="echo-root">
@@ -208,8 +215,9 @@
 
                 <!-- =======================================================
          BRAND DEFAULT BACKGROUND (fallback if no ?img=)
-         IMPORTANT: images live in /public/
-         So we use just the filename here.
+         IMPORTANT:
+         - Put the filename only (NO /public/ here)
+         - Example: kwv_5.jpg
          ======================================================= -->
                 <div
                   id="bg"
@@ -223,14 +231,22 @@
               document.addEventListener('DOMContentLoaded', function() {
                 (function () {
                   /* =========================================================
-                     1) READ URL PARAMS
-                     Supports:
+                     0) TELEPORT ESCAPE HATCH
+                     - Some builds wrap embeds in a constrained container.
+                     - This ensures #echo-root lives directly under <body>.
+                     - Prevents “overlay only in the middle” problems.
+                     ========================================================= */
+                  var root = document.getElementById("echo-root");
+                  if (root && root.parentElement && root.parentElement !== document.body) {
+                    document.body.insertBefore(root, document.body.firstChild);
+                  }
+
+                  /* =========================================================
+                     1) READ URL PARAMS (supports query + hash)
                        ?hl=Headline
                        ?sh=Subheadline
                        ?cta=Button%20Text
-                       ?img=kwv_16.jpg   (expects image files in /public/)
-                     Also supports hash params:
-                       #hl=...&img=...
+                       ?img=kwv_16.jpg
                      ========================================================= */
                   function parseParams(str) {
                     str = (str || "").replace(/^[?#]/, "");
@@ -247,11 +263,14 @@
                     return params;
                   }
 
-                  var params = Object.assign({}, parseParams(window.location.search), parseParams(window.location.hash));
-                  console.log("DYNAMIC PARAMS:", params);
+                  var params = Object.assign(
+                    {},
+                    parseParams(window.location.search),
+                    parseParams(window.location.hash)
+                  );
 
                   /* =========================================================
-                     2) TEXT SWAPS (these already work)
+                     2) TEXT SWAPS
                      ========================================================= */
                   var hlEl = document.getElementById("hl");
                   var shEl = document.getElementById("sh");
@@ -264,71 +283,53 @@
                   /* =========================================================
                      3) BACKGROUND SWAP (SUBDOMAIN-SAFE)
                      - NO hardcoded domains
-                     - Uses current subdomain automatically
-                     - Prefers /public/<filename>
-                     - Falls back to /<filename> if a deployment serves public at root
+                     - Tries /public/<file> first, then /<file> fallback
+                     - Cache-bust to avoid CDN weirdness while testing
                      ========================================================= */
-                  var root = document.getElementById("echo-root");
-                  if (!root) { console.log("BG: #echo-root not found."); return; }
+                  root = document.getElementById("echo-root");
+                  if (!root) return;
 
                   var bgEl = document.getElementById("bg");
                   var defaultBg = bgEl ? (bgEl.getAttribute("data-default") || "").trim() : "";
                   var chosen = (params.img || defaultBg || "").trim();
+                  if (!chosen) return;
 
-                  if (!chosen) {
-                    console.log("BG: No img param and no data-default set. Background unchanged.");
-                    return;
-                  }
-
-                  /* If they pass a FULL URL (rare), use it directly */
+                  // Full URL support (rare)
                   if (/^https?:\/\//i.test(chosen)) {
-                    root.style.backgroundImage =
-                    'linear-gradient(var(--kw-bg-overlay), var(--kw-bg-overlay)), url("' + chosen + '")';
-                    console.log("BG SET (full url):", chosen);
+                    root.style.backgroundImage = 'url("' + chosen + '")';
                     return;
                   }
 
-                  /* Normalize filename (strip leading slashes) */
+                  // Normalize filename
                   chosen = decodeURIComponent(chosen).replace(/^\/+/, "");
 
                   var origin = window.location.origin.replace(/\/+$/, "");
-
-                  /* Candidate locations (in order) */
                   var candidates = [
-                    origin + "/public/" + chosen, /* your standard */
-                    origin + "/" + chosen         /* fallback */
+                    origin + "/public/" + chosen,
+                    origin + "/" + chosen
                   ];
 
-                  /* Probe candidates until one loads (NO GUESSING) */
                   function tryLoad(i) {
-                    if (i >= candidates.length) {
-                      console.log("BG FAILED: none loaded:", candidates);
-                      console.log("BG NOTE: This usually means the file is NOT deployed on this subdomain.");
-                      return;
-                    }
+                    if (i >= candidates.length) return;
 
                     var url = candidates[i];
                     var img = new Image();
 
                     img.onload = function () {
-                      root.style.backgroundImage =
-                      'linear-gradient(var(--kw-bg-overlay), var(--kw-bg-overlay)), url("' + url + '")';
+                      // ✅ IMPORTANT: Only set the IMAGE here (overlay comes from #echo-overlay)
+                      root.style.backgroundImage = 'url("' + url + '")';
                       root.style.backgroundSize = "cover";
                       root.style.backgroundPosition = "center";
                       root.style.backgroundRepeat = "no-repeat";
-                      console.log("BG LOADED OK:", url);
                     };
 
                     img.onerror = function () {
-                      console.log("BG 404/FAIL:", url);
                       tryLoad(i + 1);
                     };
 
-                    /* Cache-bust so you don’t fight CDN caching during tests */
                     img.src = url + (url.indexOf("?") === -1 ? "?" : "&") + "v=" + Date.now();
                   }
 
-                  console.log("BG PROBING:", candidates);
                   tryLoad(0);
                 })();
               });
