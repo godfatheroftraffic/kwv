@@ -128,10 +128,6 @@
               #echo-overlay {
                 position: fixed;
                 inset: 0;
-                /* top:0 right:0 bottom:0 left:0 */
-                width: 100vw;
-                height: 100vh;
-
                 background: var(--kw-bg-overlay);
                 z-index: 0;
                 pointer-events: none !important;
@@ -230,42 +226,6 @@
             <script>
               document.addEventListener('DOMContentLoaded', function() {
                 (function () {
-                  /* =========================================================
-                     0) TELEPORT ESCAPE HATCH
-                     - Some builds wrap embeds in a constrained container.
-                     - This ensures #echo-root lives directly under <body>.
-                     - Prevents “overlay only in the middle” problems.
-                     ========================================================= */
-                var root = document.getElementById("echo-root");
-                if (!root) return;
-
-                /* =========================================================
-                ESCAPE HATCH (ONLY if container is constrained)
-                - If Teleport constrains embed width/height, move to
-
-                <body>
-                  - AND collapse the old Teleport wrapper so you don't get
-                  the "second background image block" below.
-                  ========================================================= */
-                  (function () {
-                  var placeholder = root.parentElement; // where the embed originally lived
-
-                  // Detect if we are constrained (common cause of "overlay only in middle")
-                  var r = root.getBoundingClientRect();
-                  var constrained = r.width < window.innerWidth * 0.9; if (placeholder && placeholder !==document.body && constrained) {
-                    // Move overlay hero to the top of <body>
-                    document.body.insertBefore(root, document.body.firstChild);
-
-                    // Collapse the old Teleport block so its background/height disappears
-                    placeholder.style.setProperty("height", "0", "important");
-                    placeholder.style.setProperty("min-height", "0", "important");
-                    placeholder.style.setProperty("padding", "0", "important");
-                    placeholder.style.setProperty("margin", "0", "important");
-                    placeholder.style.setProperty("background", "none", "important");
-                    placeholder.style.setProperty("background-image", "none", "important");
-                    placeholder.style.setProperty("overflow", "hidden", "important");
-                    }
-                    })();
 
                   /* =========================================================
                      1) READ URL PARAMS (supports query + hash)
