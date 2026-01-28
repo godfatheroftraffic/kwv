@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>kwc</title>
+    <meta property="og:title" content="kwc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}pre {  white-space: normal;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 16px;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-theme-neutral-dark);
+        background: var(--dl-color-theme-neutral-light);
+
+        fill: var(--dl-color-theme-neutral-dark);
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/animate.css@4.1.1/animate.css"
+    />
+    <link
+      rel="shortcut icon"
+      href="public/kwip_logo_solid-200h1.png"
+      type="icon/png"
+      sizes="32x32"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+    />
+  </head>
+  <body>
+    <link rel="stylesheet" href="./style.css" />
+    <div>
+      <link href="./index.css" rel="stylesheet" />
+
+      <div data-bg-target="1" class="quiz-container1">
+        <div data-bg-target="1" class="quiz-thq-container-elm"></div>
+        <div class="quiz-container2">
+          <div class="quiz-container3">
+            <style>
+              :root {
+                /* =========================================================
+                   BRANDING DEFAULTS — CHANGE THESE ONCE PER BRAND
+                   ========================================================= */
+                --kw-bg-overlay: rgba(0, 0, 0, 0.55);
+                /* overlay darkness */
+                --kw-text: #ffffff;
+                /* main text color */
+                --kw-accent: #00e676;
+                /* CTA button bg */
+                --kw-accent-text: #0b0f14;
+                /* CTA text color */
+                --kw-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+                  "Helvetica Neue", Helvetica;
+              }
+
+              /* =========================================================
+                 UNIVERSAL FULLSCREEN WRAPPER
+                 - This is OUR wrapper, not Teleport’s.
+                 - Background image is applied here by JS.
+                 ========================================================= */
+              #echo-root {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 22px;
+                font-family: var(--kw-font);
+                color: var(--kw-text);
+
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+              }
+
+              /* Dark overlay so text stays readable */
+              #echo-overlay {
+                position: absolute;
+                inset: 0;
+                background: var(--kw-bg-overlay);
+                z-index: 0;
+              }
+
+              #echo-content {
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                max-width: 720px;
+                text-align: center;
+                pointer-events: auto !important;
+              }
+
+              #hl {
+                margin: 0 0 14px;
+                font-size: 38px;
+                line-height: 1.08;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+              }
+
+              #sh {
+                margin: 0 0 22px;
+                font-size: 18px;
+                line-height: 1.45;
+                opacity: 0.95;
+              }
+
+              #cta {
+                display: inline-block;
+                padding: 16px 26px;
+                background: var(--kw-accent);
+                color: var(--kw-accent-text);
+                text-decoration: none;
+                font-size: 18px;
+                border-radius: 12px;
+                font-weight: 900;
+                box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
+              }
+
+              @media (max-width: 420px) {
+                #hl {
+                  font-size: 30px;
+                }
+
+                #sh {
+                  font-size: 16px;
+                }
+
+                #cta {
+                  width: 100%;
+                  max-width: 320px;
+                }
+              }
+
+              /* =========================================================
+                 CLICK FIX
+                 - If we need the site under the overlay to remain clickable,
+                   keep pointer-events disabled on root.
+                 - If we want this overlay to capture clicks everywhere,
+                   remove the #echo-root pointer-events line.
+                 ========================================================= */
+              #echo-root {
+                pointer-events: none !important;
+              }
+
+              #echo-content {
+                pointer-events: auto !important;
+              }
+            </style>
+
+            <div id="echo-root">
+              <div id="echo-overlay"></div>
+
+              <div id="echo-content">
+                <!-- =======================================================
+         BRAND DEFAULT COPY (fallbacks if no URL params)
+         ======================================================= -->
+                <h1 id="hl" data-default="Trade Without Being There">
+                  Trade Without Being There
+                </h1>
+                <p id="sh" data-default="Offline? Trading continues.">
+                  Offline? Trading continues.
+                </p>
+
+                <a
+                  id="cta"
+                  data-default="View Demo"
+                  href="https://form.typeform.com/to/VV7QWTvH?utm_source=xxxxx&amp;utm_medium=xxxxx&amp;utm_campaign=xxxxx#first_name=xxxxx&amp;email=xxxxx&amp;phone_number=xxxxx"
+                >
+                  View Demo
+                </a>
+
+                <!-- =======================================================
+         BRAND DEFAULT BACKGROUND (fallback if no ?img=)
+         IMPORTANT: images live in /public/
+         So we use just the filename here.
+         ======================================================= -->
+                <div
+                  id="bg"
+                  data-default="kwv_5.jpg"
+                  style="display:none"
+                ></div>
+              </div>
+            </div>
+
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                (function () {
+                  /* =========================================================
+                     1) READ URL PARAMS
+                     Supports:
+                       ?hl=Headline
+                       ?sh=Subheadline
+                       ?cta=Button%20Text
+                       ?img=kwv_16.jpg   (expects image files in /public/)
+                     Also supports hash params:
+                       #hl=...&img=...
+                     ========================================================= */
+                  function parseParams(str) {
+                    str = (str || "").replace(/^[?#]/, "");
+                    var params = {};
+                    if (!str) return params;
+
+                    str.split("&").forEach(function (pair) {
+                      var parts = pair.split("=");
+                      var key = decodeURIComponent(parts[0] || "").trim();
+                      var val = decodeURIComponent((parts[1] || "").split("+").join(" ")).trim();
+                      if (key) params[key] = val;
+                    });
+
+                    return params;
+                  }
+
+                  var params = Object.assign({}, parseParams(window.location.search), parseParams(window.location.hash));
+                  console.log("DYNAMIC PARAMS:", params);
+
+                  /* =========================================================
+                     2) TEXT SWAPS (these already work)
+                     ========================================================= */
+                  var hlEl = document.getElementById("hl");
+                  var shEl = document.getElementById("sh");
+                  var ctaEl = document.getElementById("cta");
+
+                  if (params.hl && hlEl) hlEl.textContent = params.hl;
+                  if (params.sh && shEl) shEl.textContent = params.sh;
+                  if (params.cta && ctaEl) ctaEl.textContent = params.cta;
+
+                  /* =========================================================
+                     3) BACKGROUND SWAP (SUBDOMAIN-SAFE)
+                     - NO hardcoded domains
+                     - Uses current subdomain automatically
+                     - Prefers /public/<filename>
+                     - Falls back to /<filename> if a deployment serves public at root
+                     ========================================================= */
+                  var root = document.getElementById("echo-root");
+                  if (!root) { console.log("BG: #echo-root not found."); return; }
+
+                  var bgEl = document.getElementById("bg");
+                  var defaultBg = bgEl ? (bgEl.getAttribute("data-default") || "").trim() : "";
+                  var chosen = (params.img || defaultBg || "").trim();
+
+                  if (!chosen) {
+                    console.log("BG: No img param and no data-default set. Background unchanged.");
+                    return;
+                  }
+
+                  /* If they pass a FULL URL (rare), use it directly */
+                  if (/^https?:\/\//i.test(chosen)) {
+                    root.style.backgroundImage = 'url("' + chosen + '")';
+                    console.log("BG SET (full url):", chosen);
+                    return;
+                  }
+
+                  /* Normalize filename (strip leading slashes) */
+                  chosen = decodeURIComponent(chosen).replace(/^\/+/, "");
+
+                  var origin = window.location.origin.replace(/\/+$/, "");
+
+                  /* Candidate locations (in order) */
+                  var candidates = [
+                    origin + "/public/" + chosen, /* your standard */
+                    origin + "/" + chosen         /* fallback */
+                  ];
+
+                  /* Probe candidates until one loads (NO GUESSING) */
+                  function tryLoad(i) {
+                    if (i >= candidates.length) {
+                      console.log("BG FAILED: none loaded:", candidates);
+                      console.log("BG NOTE: This usually means the file is NOT deployed on this subdomain.");
+                      return;
+                    }
+
+                    var url = candidates[i];
+                    var img = new Image();
+
+                    img.onload = function () {
+                      root.style.backgroundImage = 'url("' + url + '")';
+                      root.style.backgroundSize = "cover";
+                      root.style.backgroundPosition = "center";
+                      root.style.backgroundRepeat = "no-repeat";
+                      console.log("BG LOADED OK:", url);
+                    };
+
+                    img.onerror = function () {
+                      console.log("BG 404/FAIL:", url);
+                      tryLoad(i + 1);
+                    };
+
+                    /* Cache-bust so you don’t fight CDN caching during tests */
+                    img.src = url + (url.indexOf("?") === -1 ? "?" : "&") + "v=" + Date.now();
+                  }
+
+                  console.log("BG PROBING:", candidates);
+                  tryLoad(0);
+                })();
+              });
+            </script>
+          </div>
+        </div>
+        <footer11-wrapper
+          class="footer11-wrapper"
+          rootclassname="footer11undefined"
+        >
+          <!--Footer11 component-->
+          <footer
+            class="footer11-container1 thq-section-padding footer11root-class-name1"
+          >
+            <div class="footer11-thq-max-width-elm thq-section-max-width">
+              <div></div>
+              <a
+                href="https://killerwhaleventures.com/"
+                target="_blank"
+                rel="noreferrer noopener"
+                class="footer11-link1"
+              >
+                <img
+                  alt="image"
+                  src="public/kwip_logo_solid-200h.png"
+                  class="footer11-image"
+                />
+              </a>
+              <div></div>
+              <span class="footer11-text1">
+                <fragment class="quiz-fragment1">
+                  <span class="quiz-text1">
+                    Copyright © 2026 Killer Whale Ventures All Rights Reserved.
+                  </span>
+                </fragment>
+              </span>
+              <div class="footer11-thq-credits-elm1">
+                <div class="footer11-thq-row-elm">
+                  <div class="footer11-thq-credits-elm2"></div>
+                </div>
+              </div>
+            </div>
+            <div class="footer11-container2">
+              <div class="footer11-container3">
+                <div class="footer11-container4">
+                  <a
+                    href="https://killerwhaleventures.com/web-user-agreement/"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    class="footer11-link2"
+                  >
+                    <fragment class="quiz-fragment2">
+                      <span class="quiz-text2">Terms |&nbsp;</span>
+                    </fragment>
+                  </a>
+                </div>
+                <a
+                  href="https://killerwhaleventures.com/privacy-policy/"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  class="footer11-link3"
+                >
+                  <fragment class="quiz-fragment3">
+                    <span class="quiz-text3">Privacy |&nbsp;</span>
+                  </fragment>
+                </a>
+              </div>
+              <a
+                href="https://killerwhaleventures.com/cookie-policy/"
+                target="_blank"
+                rel="noreferrer noopener"
+                class="footer11-link4"
+              >
+                <fragment class="quiz-fragment4">
+                  <span class="quiz-text4">Cookie Policy</span>
+                </fragment>
+              </a>
+            </div>
+          </footer>
+        </footer11-wrapper>
+      </div>
+      <link rel="canonical" href="https://quiz.teleporthq.app/" />
+    </div>
+  </body>
+</html>
