@@ -69,116 +69,119 @@
         <div class="quiz-container2">
           <div class="quiz-container3">
             <style>
-              :root {
-                /* =========================================================
-                   BRANDING DEFAULTS — CHANGE THESE ONCE PER BRAND
-                   ========================================================= */
-                --kw-bg-overlay: rgba(0, 0, 0, 0.55);
-                /* overlay darkness */
-                --kw-text: #ffffff;
-                /* main text color */
-                --kw-accent: #00e676;
-                /* CTA button bg */
-                --kw-accent-text: #0b0f14;
-                /* CTA text color */
-                --kw-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-                  "Helvetica Neue", Helvetica;
-              }
+                :root {
+                  /* =========================================================
+                     BRANDING DEFAULTS — CHANGE THESE ONCE PER BRAND
+                     ========================================================= */
+                  --kw-bg-overlay: rgba(0, 0, 0, 0.55);
+                  /* overlay darkness */
+                  --kw-text: #ffffff;
+                  /* main text color */
+                  --kw-accent: #00e676;
+                  /* CTA button bg */
+                  --kw-accent-text: #0b0f14;
+                  /* CTA text color */
+                  --kw-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+                    "Helvetica Neue", Helvetica;
+                }
 
-              /* =========================================================
-                 UNIVERSAL FULLSCREEN WRAPPER
-                 - This is OUR wrapper, not Teleport’s.
-                 - Background image is applied here by JS.
-                 ========================================================= */
-              /* FOOTER FIX: fullscreen hero without covering the entire page forever */
-              #echo-root {
-              position: relative; /* was fixed */
-              width: 100%;
-              min-height: 100vh; /* still full screen */
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              padding: 22px;
-              font-family: var(--kw-font);
-              color: var(--kw-text);
-              z-index: 1; /* was 9999 */
-              pointer-events: none !important; /* keeps underlying page clickable */
-              }
+                /* =========================================================
+                   UNIVERSAL FULLSCREEN WRAPPER
+                   - This is OUR wrapper, not Teleport’s.
+                   - Background image is applied here by JS.
+                   ========================================================= */
+                /* FOOTER FIX: fullscreen hero without covering the entire page forever */
+                #echo-root {
+                position: relative; /* was fixed */
+                width: 100%;
+                min-height: 100vh; /* still full screen */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 22px;
+                font-family: var(--kw-font);
+                color: var(--kw-text);
+                z-index: 1; /* was 9999 */
+                pointer-events: none !important; /* keeps underlying page clickable */
+                }
 
               /* Dark overlay so text stays readable */
+
               #echo-overlay {
-                position: fixed;
-                top: o;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: var(--kw-bg-overlay);
-                z-index: 0;
-                pointer-events: none !important;
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              width: 100vw;
+              height: 100vh;
+              background: var(--kw-bg-overlay);
+              z-index: 0;
+              pointer-events: none !important;
               }
 
-              #echo-content {
-                position: relative;
-                z-index: 1;
-                width: 100%;
-                max-width: 720px;
-                text-align: center;
-                pointer-events: auto !important;
-              }
+                #echo-content {
+                  position: relative;
+                  z-index: 1;
+                  width: 100%;
+                  max-width: 720px;
+                  text-align: center;
+                  pointer-events: auto !important;
+                }
 
-              #hl {
-                margin: 0 0 14px;
-                font-size: 38px;
-                line-height: 1.08;
-                font-weight: 800;
-                letter-spacing: -0.02em;
-              }
-
-              #sh {
-                margin: 0 0 22px;
-                font-size: 18px;
-                line-height: 1.45;
-                opacity: 0.95;
-              }
-
-              #cta {
-                display: inline-block;
-                padding: 16px 26px;
-                background: var(--kw-accent);
-                color: var(--kw-accent-text);
-                text-decoration: none;
-                font-size: 18px;
-                border-radius: 12px;
-                font-weight: 900;
-                box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
-              }
-
-              @media (max-width: 420px) {
                 #hl {
-                  font-size: 30px;
+                  margin: 0 0 14px;
+                  font-size: 38px;
+                  line-height: 1.08;
+                  font-weight: 800;
+                  letter-spacing: -0.02em;
                 }
 
                 #sh {
-                  font-size: 16px;
+                  margin: 0 0 22px;
+                  font-size: 18px;
+                  line-height: 1.45;
+                  opacity: 0.95;
                 }
 
                 #cta {
-                  width: 100%;
-                  max-width: 320px;
+                  display: inline-block;
+                  padding: 16px 26px;
+                  background: var(--kw-accent);
+                  color: var(--kw-accent-text);
+                  text-decoration: none;
+                  font-size: 18px;
+                  border-radius: 12px;
+                  font-weight: 900;
+                  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
                 }
-              }
 
-              /* =========================================================
-                 CLICK FIX
-                 - If we need the site under the overlay to remain clickable,
-                   keep pointer-events disabled on root.
-                 - If we want this overlay to capture clicks everywhere,
-                   remove the #echo-root pointer-events line.
-                 ========================================================= */
+                @media (max-width: 420px) {
+                  #hl {
+                    font-size: 30px;
+                  }
 
-              #echo-content {
-                pointer-events: auto !important;
-              }
+                  #sh {
+                    font-size: 16px;
+                  }
+
+                  #cta {
+                    width: 100%;
+                    max-width: 320px;
+                  }
+                }
+
+                /* =========================================================
+                   CLICK FIX
+                   - If we need the site under the overlay to remain clickable,
+                     keep pointer-events disabled on root.
+                   - If we want this overlay to capture clicks everywhere,
+                     remove the #echo-root pointer-events line.
+                   ========================================================= */
+
+                #echo-content {
+                  pointer-events: auto !important;
+                }
             </style>
 
             <div id="echo-root">
@@ -279,7 +282,8 @@
 
                   /* If they pass a FULL URL (rare), use it directly */
                   if (/^https?:\/\//i.test(chosen)) {
-                    root.style.backgroundImage = 'url("' + chosen + '")';
+                    root.style.backgroundImage =
+                    'linear-gradient(var(--kw-bg-overlay), var(--kw-bg-overlay)), url("' + chosen + '")';
                     console.log("BG SET (full url):", chosen);
                     return;
                   }
@@ -307,7 +311,8 @@
                     var img = new Image();
 
                     img.onload = function () {
-                      root.style.backgroundImage = 'url("' + url + '")';
+                      root.style.backgroundImage =
+                      'linear-gradient(var(--kw-bg-overlay), var(--kw-bg-overlay)), url("' + url + '")';
                       root.style.backgroundSize = "cover";
                       root.style.backgroundPosition = "center";
                       root.style.backgroundRepeat = "no-repeat";
