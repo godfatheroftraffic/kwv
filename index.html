@@ -90,26 +90,28 @@
                  - This is OUR wrapper, not Teleport’s.
                  - Background image is applied here by JS.
                  ========================================================= */
+              /* FOOTER FIX: fullscreen hero without covering the entire page forever */
               #echo-root {
-                position: fixed;
-                inset: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 22px;
-                font-family: var(--kw-font);
-                color: var(--kw-text);
-                z-index: 9999;
-
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
+              position: relative; /* was fixed */
+              width: 100%;
+              min-height: 100vh; /* still full screen */
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 22px;
+              font-family: var(--kw-font);
+              color: var(--kw-text);
+              z-index: 1; /* was 9999 */
+              pointer-events: none !important; /* keeps underlying page clickable */
               }
 
               /* Dark overlay so text stays readable */
               #echo-overlay {
-                position: absolute;
-                inset: 0;
+                position: fixed;
+                top: o;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
                 background: var(--kw-bg-overlay);
                 z-index: 0;
                 pointer-events: none !important;
@@ -173,9 +175,6 @@
                  - If we want this overlay to capture clicks everywhere,
                    remove the #echo-root pointer-events line.
                  ========================================================= */
-              #echo-root {
-                pointer-events: none !important;
-              }
 
               #echo-content {
                 pointer-events: auto !important;
