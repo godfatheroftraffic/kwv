@@ -69,22 +69,27 @@
         <div class="quiz-container2">
           <div class="quiz-container3">
             <style>
+
+              @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+
               :root {
+
                 /* =========================================================
                    BRANDING DEFAULTS — CHANGE THESE ONCE PER BRAND
                    ========================================================= */
-                --kw-bg-overlay: rgba(0, 0, 0, 0.55);
-                /* overlay darkness */
-                --kw-text: #ffffff;
-                /* main text color */
-                --kw-accent: #00e676;
-                /* CTA button bg */
-                --kw-accent-text: #0b0f14;
-                /* CTA text color */
-                --kw-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
-                  "Helvetica Neue", Helvetica, sans-serif;
-              }
 
+              --kw-bg-overlay: rgba(0, 0, 0, 0.55); /* keep unless you want lighter/darker */
+              --kw-text: #ffffff;
+
+              /* Killer Whale accent (from SignUpButton / learnbutton) */
+              --kw-accent: #1DBF8A;
+              --kw-accent-text: #040408;
+
+              /* Font: they did NOT provide a font file in the zip
+              so keep your current stack (safe + consistent). */
+              --kw-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+              "Helvetica Neue", Helvetica, sans-serif;
+              }
               /* =========================================================
                  UNIVERSAL FULLSCREEN WRAPPER
                  - This is OUR wrapper, not Teleport's.
@@ -262,20 +267,20 @@
          - data-default = fallback value if URL param missing
          - Text between tags = what shows when testing directly
          ======================================================= -->
-                <h1 id="hl" data-default="Trade Without Being There">
-                  Trade Without Being There
+                <h1 id="hl" data-default="Consistent, Trusted Signals">
+                  Consistent, Trusted Signals
                 </h1>
-                <p id="sh" data-default="Offline? Trading continues.">
-                  Offline? Trading continues.
+                <p id="sh" data-default="Clear rules, clear trading">
+                  Clear rules, clear trading.
                 </p>
 
                 <a
                   id="cta"
-                  data-default="View Demo"
+                  data-default="View Live Signals"
                   data-default-href="https://form.typeform.com/to/VV7QWTvH?utm_source=xxxxx&amp;utm_medium=xxxxx&amp;utm_campaign=xxxxx#first_name=xxxxx&amp;email=xxxxx&amp;phone_number=xxxxx"
                   href="https://form.typeform.com/to/VV7QWTvH?utm_source=xxxxx&amp;utm_medium=xxxxx&amp;utm_campaign=xxxxx#first_name=xxxxx&amp;email=xxxxx&amp;phone_number=xxxxx"
                 >
-                  View Demo
+                  View Live Signals
                 </a>
 
                 <!-- =======================================================
@@ -305,27 +310,27 @@
                 <div id="footer-content">
                   <!-- COPYRIGHT TEXT - UPDATE BRAND NAME AND YEAR -->
                   <p id="footer-copyright">
-                    © 2025 Brand Name. All rights reserved.
+                    © 2026 Killer Whale Ventures. All rights reserved.
                   </p>
 
                   <!-- FOOTER LINKS - UPDATE URLs FOR EACH BRAND -->
                   <div id="footer-links">
                     <a
-                      href="https://yourbrand.com/privacy"
+                      href="https://killerwhaleventures.com/privacy-policy/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       Privacy Policy
                     </a>
                     <a
-                      href="https://yourbrand.com/terms"
+                      href="https://killerwhaleventures.com/web-user-agreement/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       Terms of Service
                     </a>
                     <a
-                      href="https://yourbrand.com/cookies"
+                      href="https://killerwhaleventures.com/cookie-policy/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -397,7 +402,15 @@
                      https://calendly.com/demo?clickid=abc123&utm_source=push
                      ========================================================= */
                   if (ctaEl) {
-                    var baseUrl = params.link || ctaEl.getAttribute("data-default-href") || ctaEl.href;
+                  var baseUrl = params.link || ctaEl.getAttribute("data-default-href") || ctaEl.href;
+
+                  // Auto-add https:// if link param doesn't have protocol
+                  if (params.link && !/^https?:\/\//i.test(params.link)) {
+                  baseUrl = "https://" + params.link;
+                  console.log("LINK: Added https:// to link parameter:", baseUrl);
+                  }
+
+                  // Content params that should NOT be passed to button
 
                     // Content params that should NOT be passed to button
                     var contentParams = ["hl", "sh", "cta", "img", "link"];
