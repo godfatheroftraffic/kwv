@@ -137,8 +137,6 @@
   display: inline-block;
 }
  
-
- 
 @media(max-width: 767px) {
   .footer11-thq-row-elm {
     align-items: center;
